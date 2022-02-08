@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://algorit.ma/wp-content/uploads/2016/05/LOGo_Black_Vector.png" />
+
+    <title>Ian Pangestu</title>
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+                <div class="sidebar-brand-text mx-3">Ian Pangestu</div>
+            </a>
+
+        </ul>
+
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <div class="container-fluid">
+
+                    <h1 class="h3 mt-3 mb-2 text-gray-800">PijarCamp - CRUD</h1>
+                    <p class="mb-4">Web ini dibuat untuk mengikuti seleksi bootcamp PijarCamp.</p>
+
+                    <div class="card shadow mb-4">
+                        <div style="display: flex; justify-content: space-between;" class="card-header py-3">
+
+                            <h6 class="m-0 font-weight-bold text-primary">Tabel Barang</h6>
+                            <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#Modal" data-action="add">
+                              Add Produk
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Keterangan</th>
+                                            <th>Harga</th>
+                                            <th>Stok</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                      <%
+                                      if(userData.length!=0){
+                                      var i=1;
+                                      userData.forEach(function(data){
+                                      %>
+
+                                    <tr>
+                                      <td style="width:20px;"><%=i; %></td>
+                                      <td><%=data.nama_produk %></td>
+                                      <td><%=data.keterangan %></td>
+                                      <td><%=data.harga %></td>
+                                      <td><%=data.jumlah %></td>
+                                      <td style="width: 200px; text-align: center;">
+                                      <a class="btn btn-success" href="#" data-toggle="modal" data-target="#Modal" data-action="edit" data-nama="<%=data.nama_produk%>" data-keterangan="<%=data.keterangan%>" data-harga="<%=data.harga%>" data-jumlah="<%=data.jumlah%>">Edit</a>
+                                      <a class="btn btn-danger" onclick="deleteProduk('<%=data.nama_produk %>')">Delete</a>
+                                      </td>
+                                  </tr>
+                                  <%  i++; }) %>
+                                  <% } else{ %>
+                                      <tr>
+                                          <td colspan="6" style="text-align: center;">No Data Found</td>
+                                      </tr>
+                                  <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Admin SB 2 - 2022</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+    </div>
+
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add" method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Produk</label>
+                            <input type="text" class="form-control" id="nama" name="nama" aria-describedby="emailHelp"
+                                placeholder="Nama Produk">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Keterangan</label>
+                            <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                placeholder="Keterangan">
+                        </div>
+                        <div class="form-grouo">
+                            <label for="exampleInputPassword1">Harga</label>
+                            <input type="text" class="form-control" id="harga" name="harga" placeholder="Harga">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Stok</label>
+                            <input type="text" class="form-control" id="stok" name="stok" placeholder="Stok">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+      function validateForm(modal){
+        if(modal.find('#nama').val() == "" || modal.find('#keterangan').val() == "" || modal.find('#harga').val() == "" || modal.find('#stok').val() == ""){
+            alert("Please fill all fields")
+            return false
+            }
+
+        if(isNaN(modal.find('#harga').val()) || isNaN(modal.find('#stok').val())){
+            alert("Harga and Stok must be number")
+            return false
+        }
+
+        return true
+      }
+
+      $('#Modal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)
+      var action = button.data('action')
+      var modal = $(this)
+
+      if(action == "edit"){
+        const nama = button.data('nama')
+        const keterangan = button.data('keterangan')
+        const harga = button.data('harga')
+        const jumlah = button.data('jumlah')
+
+        modal.find('.modal-title').text('Edit Produk')
+        modal.find('#nama').val(nama)
+        modal.find('#nama').attr('disabled', true)
+
+        modal.find('#keterangan').val(keterangan)
+        modal.find('#harga').val(harga)
+        modal.find('#stok').val(jumlah)
+        modal.find('#submit').text('Edit')
+
+        modal.find('#submit').click(function(){
+        if(validateForm(modal)){
+            $.ajax({
+                url: `/edit/${decodeURI(nama)}`,
+                type: 'PUT',
+                data: {
+                    nama,
+                    keterangan: modal.find('#keterangan').val(),
+                    harga: modal.find('#harga').val(),
+                    jumlah: modal.find('#stok').val()
+                },
+                success: function(data){
+                    alert("Berhasil Mengedit Produk")
+                    location.reload()
+                }
+            })
+        }
+        })
+
+      }else{
+        modal.find('.modal-title').text('Add Produk')
+
+        modal.find('#submit').text('Add')
+        modal.find('#submit').click(function(){
+          if(validateForm(modal)){
+                $.ajax({
+                url: '/add',
+                type: 'POST',
+                data: {
+                nama: modal.find('#nama').val(),
+                keterangan: modal.find('#keterangan').val(),
+                harga: modal.find('#harga').val(),
+                jumlah: modal.find('#stok').val()
+                },
+                success: function(data){
+                    alert('Data berhasil ditambahkan')
+                    location.reload()
+                }
+            })
+          }
+        })
+      }
+    })
+
+    $('#Modal').on('hide.bs.modal', function (event) {
+      const modal = $(this)
+
+      modal.find('#nama').val('')
+      modal.find('#keterangan').val('')
+      modal.find('#harga').val('')
+      modal.find('#stok').val('')
+      modal.find('#nama').attr('disabled', false)
+    })
+
+    function deleteProduk(nama){
+      $.ajax({
+        url: `/delete/${encodeURI(nama)}`,
+        type: 'DELETE',
+        success: function(data){
+          alert('Data berhasil dihapus')
+          location.reload()
+        }
+      })
+    }
+    </script>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>
